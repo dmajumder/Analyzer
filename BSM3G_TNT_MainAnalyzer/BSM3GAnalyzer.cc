@@ -12,11 +12,11 @@ int main (int argc, char *argv[]) {
 
   //TApplication app("App",&argc, argv);
   TFile * fs = new TFile(argv[2], "RECREATE");
-  BSM3GAnalyzer BSM3GAnalyzer_(fs, argv[1]);
+  BSM3GAnalyzer BSM3GAnalyzer_(fs, argv[1], atoi(argv[3]));
 
 }
 
-BSM3GAnalyzer::BSM3GAnalyzer(TFile* theFile, char* fname) {
+BSM3GAnalyzer::BSM3GAnalyzer(TFile* theFile, char* fname, int maxEvents) {
 
   //std::cout << "BSM3GAnalyzer Message: Grabbing user defined input parameters" << std::endl;
 
@@ -39,7 +39,8 @@ BSM3GAnalyzer::BSM3GAnalyzer(TFile* theFile, char* fname) {
 
   //---loop over events and perform the analysis
   //for (int entries = 0; entries < 1000; ++entries) { // for testing purposes --> loop over only 1k events
-  for(int entries = 0; entries < nentries; ++entries) {
+  //for(int entries = 0; entries < nentries; ++entries) {
+  for(int entries = 0; entries < maxEvents; ++entries) {
     if((entries+1) % 100 == 0) { std::cout << "BSM3GAnalyzer Message: Analyzing Event #" << entries+1 << std::endl; }
     BOOM->GetEntry(entries);
     analyze(theFile);
